@@ -167,22 +167,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drawMode: 1
-  mapWidth: 189
-  mapHeight: 142
-  noiseScale: 10.76
-  octaves: 1
-  persistence: 0.3
-  lacunarity: 4.78
-  seed: 330
+  mapWidth: 168
+  mapHeight: 146
+  noiseScale: 12.31
+  octaves: 3
+  persistence: 0.2
+  lacunarity: 4.93
+  seed: 419
   offset: {x: -19.47, y: -18.3}
   autoUpdate: 1
   regions:
   - Name: Water
-    height: 0.4
+    height: 0.2
     colour: {r: 0.019579919, g: 0.55689764, b: 0.8301887, a: 1}
+  - Name: shore
+    height: 0.3
+    colour: {r: 0.5137255, g: 0.39607847, b: 0.2784314, a: 1}
   - Name: Land
-    height: 1
+    height: 0.55
     colour: {r: 0.6748285, g: 0.8962264, b: 0.2494215, a: 1}
+  - Name: Mountain
+    height: 0.87
+    colour: {r: 0.4856113, g: 0.38274297, b: 0.5754717, a: 1}
+  - Name: Peak
+    height: 1
+    colour: {r: 0.84046817, g: 0.94616747, b: 0.9528302, a: 1}
 --- !u!4 &476035392
 Transform:
   m_ObjectHideFlags: 0
@@ -468,7 +477,7 @@ Transform:
   m_GameObject: {fileID: 1965519492}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 189, y: 1, z: 142}
+  m_LocalScale: {x: 168, y: 1, z: 146}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
