@@ -304,12 +304,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detailLevels:
-  - lod: 2
+  - lod: 1
     visibleDistThreshold: 200
+  - lod: 2
+    visibleDistThreshold: 300
   - lod: 3
-    visibleDistThreshold: 400
-  - lod: 4
     visibleDistThreshold: 600
+  - lod: 4
+    visibleDistThreshold: 800
+  - lod: 5
+    visibleDistThreshold: 900
   viewer: {fileID: 1459422577}
   mapMaterial: {fileID: 2100000, guid: 8ac68d458a7a89841a9d9db362205258, type: 2}
 --- !u!1 &705507993

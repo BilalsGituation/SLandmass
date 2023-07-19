@@ -3,14 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class EndlessTerrain : MonoBehaviour
-{
-    public static float maxViewDistance = 450;
+{   
+    const float viewerMoveThresholdForChunkUpdate = 25f;
+    const float sqrViewerMoveThresholdForChunkUpdate = viewerMoveThresholdForChunkUpdate * viewerMoveThresholdForChunkUpdate;
+
+    public static float maxViewDistance = 1000;
     public LODInfo[] detailLevels;
 
     public Transform viewer;
     public Material mapMaterial;
 
     public static Vector2 viewerPosition;
+    Vector2 viewerPositionOld;
     static MapGenerator mapGenerator;
     int chunkSize;
     int chunksVisibleInViewDist;
@@ -24,11 +28,16 @@ public class EndlessTerrain : MonoBehaviour
         maxViewDistance = detailLevels[detailLevels.Length - 1].visibleDistThreshold;
         chunkSize = MapGenerator.mapChunkSize - 1;
         chunksVisibleInViewDist = Mathf.RoundToInt(maxViewDistance)/chunkSize;
+        UpdateVisibleChunks();
     }
 
     void Update() {
         viewerPosition = new Vector2(viewer.position.x, viewer.position.z);
-        UpdateVisibleChunks();
+        if ((viewerPositionOld - viewerPosition).sqrMagnitude>sqrViewerMoveThresholdForChunkUpdate) {
+            viewerPositionOld = viewerPosition;
+            UpdateVisibleChunks();
+        }
+        
     }
 
     void UpdateVisibleChunks () {
@@ -93,7 +102,7 @@ public class EndlessTerrain : MonoBehaviour
 
             lodMeshes = new LODMesh[detailLevels.Length];
             for (int  i = 0; i < detailLevels.Length; i++) {
-                lodMeshes[i] = new LODMesh(detailLevels[i].lod);
+                lodMeshes[i] = new LODMesh(detailLevels[i].lod, UpdateTerrainChunk);
             }
 
             mapGenerator.RequestMapData(OnMapDataReceived);
@@ -102,6 +111,11 @@ public class EndlessTerrain : MonoBehaviour
         void OnMapDataReceived(MapData mapData) {
            this.mapData = mapData;
            mapDataReceived = true;
+
+           Texture2D texture = TextureGenerator.TextureFromColourMap(mapData.colourMap, MapGenerator.mapChunkSize, MapGenerator.mapChunkSize);
+           meshRenderer.material.mainTexture = texture;
+
+           UpdateTerrainChunk();
         }
 
         public void UpdateTerrainChunk() {
@@ -149,14 +163,18 @@ public class EndlessTerrain : MonoBehaviour
         public bool hasRequestedMesh;
         public bool hasMesh;
         int lod;
+        System.Action updateCallback;
 
-        public LODMesh(int lod) {
+        public LODMesh(int lod, System.Action updateCallback) {
             this.lod = lod;
+            this.updateCallback = updateCallback;
         }
 
         void OnMeshDataReceived (MeshData meshData) {
             mesh = meshData.CreateMesh();
             hasMesh = true;
+
+            updateCallback();
         }
 
         public void RequestMesh(MapData mapData) {
