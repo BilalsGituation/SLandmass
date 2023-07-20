@@ -9,13 +9,16 @@ public class MapGenerator : MonoBehaviour
     public enum DrawMode { noiseMap, colourMap, Mesh };
     public DrawMode drawMode;
 
+    public Noise.NormalizeMode normalizeMode;
+
     public const int mapChunkSize = 241;
     [Range(0,6)]
     public int editorPreviewLOD;
     public float noiseScale;
 
     [Range(0, 10)]
-    public int octaves;//nextline//[Range(0,1)]
+    public int octaves;//nextline//
+    [Range(0,1)]
     public float persistence;
     public float lacunarity;
 
@@ -33,7 +36,7 @@ public class MapGenerator : MonoBehaviour
 	Queue<MapThreadInfo<MeshData>> meshDataThreadInfoQueue = new Queue<MapThreadInfo<MeshData>>();
 
     public void DrawMapInEditor() {
-        MapData mapData= GenerateMapData();
+        MapData mapData= GenerateMapData(Vector2.zero);
 
         MapDisplay display = FindObjectOfType<MapDisplay>();
         if (drawMode == DrawMode.noiseMap) {
@@ -45,16 +48,16 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    public void RequestMapData(Action<MapData> callback) {
+    public void RequestMapData(Vector2 centre, Action<MapData> callback) {
 		ThreadStart threadStart = delegate {
-			MapDataThread (callback);
+			MapDataThread (centre, callback);
 		};
 
 		new Thread (threadStart).Start ();
 	}
 
-	void MapDataThread(Action<MapData> callback) {
-		MapData mapData = GenerateMapData ();
+	void MapDataThread(Vector2 centre, Action<MapData> callback) {
+		MapData mapData = GenerateMapData (centre);
 		lock (mapDataThreadInfoQueue) {
 			mapDataThreadInfoQueue.Enqueue (new MapThreadInfo<MapData> (callback, mapData));
 		}
@@ -91,16 +94,17 @@ public class MapGenerator : MonoBehaviour
 		}
 	}
 
-    MapData GenerateMapData() {
-        float[,] noiseMap = Noise.GenerateNoiseMap(mapChunkSize, mapChunkSize, seed, noiseScale, octaves, persistence, lacunarity, offset);
+    MapData GenerateMapData(Vector2 centre) {
+        float[,] noiseMap = Noise.GenerateNoiseMap(mapChunkSize, mapChunkSize, seed, noiseScale, octaves, persistence, lacunarity, centre+offset, normalizeMode);
 
         Color[] colourMap = new Color[mapChunkSize * mapChunkSize];
         for (int y = 0; y < mapChunkSize; y++) {
             for (int x = 0; x < mapChunkSize; x++){
                 float currentHeight = noiseMap[x, y];
                 for (int i = 0; i < regions.Length; i++){
-                    if (currentHeight <= regions[i].height) {
+                    if (currentHeight >= regions[i].height) {
                         colourMap[y * mapChunkSize + x] = regions[i].colour;
+                    } else {
                         break;
                     }
                 }

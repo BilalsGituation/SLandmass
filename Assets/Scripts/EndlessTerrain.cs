@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class EndlessTerrain : MonoBehaviour
 {   
+    const float scale=1f;
     const float viewerMoveThresholdForChunkUpdate = 25f;
     const float sqrViewerMoveThresholdForChunkUpdate = viewerMoveThresholdForChunkUpdate * viewerMoveThresholdForChunkUpdate;
 
@@ -20,7 +21,7 @@ public class EndlessTerrain : MonoBehaviour
     int chunksVisibleInViewDist;
 
     Dictionary<Vector2, TerrainChunk> terrainChunkDictionary = new Dictionary<Vector2, TerrainChunk>();
-    List<TerrainChunk> terrainChunksVisibleLastUpdate = new List<TerrainChunk>();
+    static List<TerrainChunk> terrainChunksVisibleLastUpdate = new List<TerrainChunk>();
 
     void Start() {
         mapGenerator = FindObjectOfType<MapGenerator>();
@@ -32,7 +33,7 @@ public class EndlessTerrain : MonoBehaviour
     }
 
     void Update() {
-        viewerPosition = new Vector2(viewer.position.x, viewer.position.z);
+        viewerPosition = new Vector2(viewer.position.x, viewer.position.z) / scale;
         if ((viewerPositionOld - viewerPosition).sqrMagnitude>sqrViewerMoveThresholdForChunkUpdate) {
             viewerPositionOld = viewerPosition;
             UpdateVisibleChunks();
@@ -96,8 +97,9 @@ public class EndlessTerrain : MonoBehaviour
             meshFilter = meshObject.AddComponent<MeshFilter>();
             meshRenderer.material = material;
             
-            meshObject.transform.position = positionV3;//nextline//meshObject.transform.localScale = Vector3.one*size/10f;
+            meshObject.transform.position = positionV3 * scale;//nextline//meshObject.transform.localScale = Vector3.one*size/10f;
             meshObject.transform.parent = parent;
+            meshObject.transform.localScale = Vector3.one * scale;
             SetVisible(false);
 
             lodMeshes = new LODMesh[detailLevels.Length];
@@ -105,7 +107,7 @@ public class EndlessTerrain : MonoBehaviour
                 lodMeshes[i] = new LODMesh(detailLevels[i].lod, UpdateTerrainChunk);
             }
 
-            mapGenerator.RequestMapData(OnMapDataReceived);
+            mapGenerator.RequestMapData(position, OnMapDataReceived);
         }
 
         void OnMapDataReceived(MapData mapData) {
@@ -143,6 +145,7 @@ public class EndlessTerrain : MonoBehaviour
                         lODMesh.RequestMesh(mapData);
                     }
                 }
+                terrainChunksVisibleLastUpdate.Add(this);
             }
 
             SetVisible (visible);
