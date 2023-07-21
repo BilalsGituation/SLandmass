@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class EndlessTerrain : MonoBehaviour
 {   
-    const float scale=1f;
+    const float scale=2f;
     const float viewerMoveThresholdForChunkUpdate = 25f;
     const float sqrViewerMoveThresholdForChunkUpdate = viewerMoveThresholdForChunkUpdate * viewerMoveThresholdForChunkUpdate;
 
@@ -80,6 +80,7 @@ public class EndlessTerrain : MonoBehaviour
 
         LODInfo[] detailLevels;
         LODMesh[] lodMeshes;
+        LODMesh collisionLODMesh;
 
         MapData mapData;
         bool mapDataReceived;
@@ -107,6 +108,9 @@ public class EndlessTerrain : MonoBehaviour
             lodMeshes = new LODMesh[detailLevels.Length];
             for (int  i = 0; i < detailLevels.Length; i++) {
                 lodMeshes[i] = new LODMesh(detailLevels[i].lod, UpdateTerrainChunk);
+                if (detailLevels[i].useForCollider) {
+                    collisionLODMesh = lodMeshes[i];
+                }
             }
 
             mapGenerator.RequestMapData(position, OnMapDataReceived);
@@ -142,12 +146,20 @@ public class EndlessTerrain : MonoBehaviour
                     if (lODMesh.hasMesh) {
                         prevLODIndex = lodIndex;
                         meshFilter.mesh = lODMesh.mesh;
-                        meshCollider.sharedMesh = lODMesh.mesh;
                     }
                     else if (!lODMesh.hasRequestedMesh) {
                         lODMesh.RequestMesh(mapData);
                     }
                 }
+
+                if (lodIndex == 0) {
+                    if (collisionLODMesh.hasMesh) {
+                        meshCollider.sharedMesh = collisionLODMesh.mesh;
+                    } else if (!collisionLODMesh.hasRequestedMesh) {
+                        collisionLODMesh.RequestMesh(mapData);
+                    }
+                }
+
                 terrainChunksVisibleLastUpdate.Add(this);
             }
 
@@ -193,7 +205,7 @@ public class EndlessTerrain : MonoBehaviour
     public struct LODInfo {
         public int lod;
         public float visibleDistThreshold;
-
+        public bool useForCollider;
     }
 }
 
