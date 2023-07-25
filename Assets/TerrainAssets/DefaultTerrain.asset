@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d07cebd7ea19be4d8960db094d1a0b7, type: 3}
+  m_Name: DefaultTerrain
+  m_EditorClassIdentifier: 
+  autoUpdate: 1
+  uniformScale: 1
+  useFlatShading: 0
+  useFalloff: 0
+  meshHeightMultiplier: 147.3
+  meshHeightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5417193
+      value: 0.08826096
+      inSlope: 0.35229
+      outSlope: 0.35229
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.15451807
+    - serializedVersion: 3
+      time: 0.83955693
+      value: 0.43646416
+      inSlope: 1.5904906
+      outSlope: 1.5904906
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.8514562
+    - serializedVersion: 3
+      time: 0.89322215
+      value: 0.6372927
+      inSlope: 3.7830944
+      outSlope: 3.7830944
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.39350748
+      outWeight: 0.42006606
+    - serializedVersion: 3
+      time: 0.96585965
+      value: 0.8815459
+      inSlope: 5.425838
+      outSlope: 5.425838
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.2845646
+      outWeight: 0.8304863
+    - serializedVersion: 3
+      time: 0.99989754
+      value: 0.97579414
+      inSlope: 0.52080166
+      outSlope: 0.52080166
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.9976425
+      inSlope: 6.608947
+      outSlope: 6.608947
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.28104532
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
