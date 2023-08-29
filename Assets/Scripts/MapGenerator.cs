@@ -8,15 +8,20 @@ public class MapGenerator : MonoBehaviour
 {
     public enum DrawMode { noiseMap, Mesh, FalloffMap};
     public DrawMode drawMode;
-
-    [Range(0,6)]
-    public int editorPreviewLOD;
     
     public TerrainData terrainData;
     public NoiseData noiseData;   
     public TextureData textureData; 
     
     public Material terrainMaterial;
+
+    [Range(0,MeshGenerator.numSupportedChunkSizes-1)]
+    public int chunkSizeIndex;
+    [Range(0,MeshGenerator.numSupportedFlatShadedChunkSizes-1)]
+    public int flatShadedChunkSizeIndex;
+
+    [Range(0,MeshGenerator.numSupportedLODs-1)]
+    public int editorPreviewLOD;
 
     public bool autoUpdate;
 
@@ -44,9 +49,9 @@ public class MapGenerator : MonoBehaviour
         get {
             
             if (terrainData.useFlatShading) {
-                return 95;
+                return MeshGenerator.supportedFlatShadedChunkSizes[flatShadedChunkSizeIndex]-1;
             } else {
-                return 239;
+                return MeshGenerator.supportedChunkSizes[chunkSizeIndex]-1;
             }
             
         }
