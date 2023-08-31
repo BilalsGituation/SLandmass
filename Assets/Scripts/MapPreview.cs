@@ -34,7 +34,7 @@ public class MapPreview : MonoBehaviour {
 		if (drawMode == DrawMode.NoiseMap) {
 			DrawTexture (TextureGenerator.TextureFromHeightMap (heightMap));
 		} else if (drawMode == DrawMode.Mesh) {
-			DrawMesh (MeshGenerator.GenerateTerrainMesh (heightMap.values,meshSettings, editorPreviewLOD));
+			DrawMesh (MeshGenerator.GenerateTerrainMesh (heightMap.values, meshSettings, editorPreviewLOD));
 		} else if (drawMode == DrawMode.FalloffMap) {
 			DrawTexture(TextureGenerator.TextureFromHeightMap(new HeightMap(FalloffGenerator.GenerateFalloffMap(meshSettings.numVerticesPerLine),0,1)));
 		}
@@ -46,7 +46,7 @@ public class MapPreview : MonoBehaviour {
 
 	public void DrawTexture(Texture2D texture) {
 		textureRender.sharedMaterial.mainTexture = texture;
-		textureRender.transform.localScale = new Vector3 (texture.width, 1, texture.height) /10f;
+		textureRender.transform.localScale = new Vector3 (texture.width, 1, texture.height) /(10f*meshSettings.meshScale);
 
 		textureRender.gameObject.SetActive (true);
 		meshFilter.gameObject.SetActive (false);

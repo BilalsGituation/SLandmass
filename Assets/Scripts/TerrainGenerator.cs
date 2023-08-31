@@ -36,6 +36,7 @@ public class TerrainGenerator : MonoBehaviour {
 
 		UpdateVisibleChunks ();
 	}
+	
 
 	void Update() {
 		viewerPosition = new Vector2 (viewer.position.x, viewer.position.z) ;
