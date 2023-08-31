@@ -9,15 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d07cebd7ea19be4d8960db094d1a0b7, type: 3}
-  m_Name: DefaultTerrain
+  m_Script: {fileID: 11500000, guid: 2e7359ea02a98a34981186bcb290aab9, type: 3}
+  m_Name: DefHeightMapSettings
   m_EditorClassIdentifier: 
   autoUpdate: 1
-  uniformScale: 1
-  useFlatShading: 1
+  noiseSettings:
+    normalizeMode: 1
+    scale: 1500
+    octaves: 6
+    persistence: 0.09
+    lacunarity: 3.9
+    seed: 69
+    offset: {x: 0, y: 0}
   useFalloff: 0
-  meshHeightMultiplier: 75
-  meshHeightCurve:
+  heightMultiplier: 200
+  heightCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -30,58 +36,58 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.5417193
-      value: 0.08826096
-      inSlope: 0.35229
-      outSlope: 0.35229
+      time: 0.08944295
+      value: 0.008424563
+      inSlope: 0.15028332
+      outSlope: 0.15028332
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.15451807
+      outWeight: 0.31335154
     - serializedVersion: 3
-      time: 0.83955693
-      value: 0.43646416
-      inSlope: 1.5904906
-      outSlope: 1.5904906
+      time: 0.31416488
+      value: 0.121326506
+      inSlope: 0.33693796
+      outSlope: 0.33693796
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.8514562
+      outWeight: 0.34989208
     - serializedVersion: 3
-      time: 0.89322215
-      value: 0.6372927
-      inSlope: 3.7830944
-      outSlope: 3.7830944
+      time: 0.6179524
+      value: 0.33345804
+      inSlope: 1.8526425
+      outSlope: 1.8526425
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.39350748
-      outWeight: 0.42006606
+      inWeight: 0.33333334
+      outWeight: 0.24575286
     - serializedVersion: 3
-      time: 0.96585965
-      value: 0.8815459
-      inSlope: 5.425838
-      outSlope: 5.425838
+      time: 0.82315856
+      value: 0.6272918
+      inSlope: 3.5571635
+      outSlope: 3.5571635
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.2845646
-      outWeight: 0.8304863
+      inWeight: 0.098387375
+      outWeight: 0.22051212
     - serializedVersion: 3
-      time: 0.99989754
-      value: 0.97579414
-      inSlope: 0.52080166
-      outSlope: 0.52080166
+      time: 0.95714253
+      value: 0.89611894
+      inSlope: 4.2116346
+      outSlope: 4.2116346
       tangentMode: 0
       weightedMode: 0
-      inWeight: 1
-      outWeight: 0.33333334
+      inWeight: 0.27436298
+      outWeight: 0.43272722
     - serializedVersion: 3
       time: 1
-      value: 0.9976425
-      inSlope: 6.608947
-      outSlope: 6.608947
+      value: 1
+      inSlope: 0.5437137
+      outSlope: 0.5437137
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.28104532
+      inWeight: 0.23103802
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
