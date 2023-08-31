@@ -23,7 +23,7 @@ public class MeshSettings : UpdatableData {
     public int numVerticesPerLine {
         get {
             
-            return supportedChunkSizes[(useFlatShading)?flatShadedChunkSizeIndex:chunkSizeIndex]+1;
+            return supportedChunkSizes[(useFlatShading)?flatShadedChunkSizeIndex:chunkSizeIndex]+5;
             
         }
     }
